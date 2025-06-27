@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PostController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -16,6 +17,12 @@ use App\Http\Controllers\PageController;
 //         ['massage' => 'Test SM 2']);
 // });
 
+Route::get('/index', function(){
+    return view('index');
+})->name('home');
 Route::get('/', [PageController::class, 'index']);
-Route::get('/test', [PageController::class, 'test']);
-Route::get('/test2', [PageController::class, 'test2']);
+// Route::get('/crete', [PageController::class, 'create']);
+
+Route::get('/Post/create', [PostController::class, 'create']);
+
+Route::post('/Post/store', [PostController::class, 'PCstore'])->name('Post.store');
