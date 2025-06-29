@@ -18,8 +18,11 @@ class PageController extends Controller
         return 'Test SM';
     }
 
-    public function test2()
-    {
-        return view('test', ['massage' => 'Test SM 2']);
+      public function test(){
+        Post::create(['title' => 'SM ', 'content' => 'No way','image'=>'null.jpg']);
+        $posts = Post::all();
+
+
+        return view('test',['massage' => 'Test SM 2', 'posts' => $posts]);
     }
 }

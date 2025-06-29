@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
-
+use App\Models\Post;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -18,11 +18,18 @@ use App\Http\Controllers\PostController;
 // });
 
 Route::get('/index', function(){
-    return view('index');
+    return view('index',['posts'=>Post::paginate(5)]);
 })->name('home');
 Route::get('/', [PageController::class, 'index']);
-// Route::get('/crete', [PageController::class, 'create']);
+Route::get('/test', [PageController::class, 'test']);
+
 
 Route::get('/Post/create', [PostController::class, 'create']);
 
 Route::post('/Post/store', [PostController::class, 'PCstore'])->name('Post.store');
+
+
+
+Route::get('/Post/edit/{Id}', [PostController::class, 'edit'])->name('Post.edit');  
+Route::post('/Post/update/{Id}', [PostController::class, 'update'])->name('Post.update');
+Route::delete('/Post/delete/{Id}', [PostController::class, 'deleteData'])->name('Post.delete');
