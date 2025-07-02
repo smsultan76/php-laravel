@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}" type="text/css">
     <title>Edit Data</title>
 </head>
 <body>
+    <header>
     <nav class="navbar">
+        <h1>{{config('app.name')}}</h1>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/Post/create">Create</a></li>
             <li><a href="{{Route('home')}}">Index</a></li>
+            <!-- <li><a href="/">Home</a></li> -->
+            <li><a href="/Post/create">Create</a></li>
         </ul>
     </nav>
-    <h1>Edit Post</h1>
-    <form action="{{route('Post.update',$post->id)}}" method="POST" enctype="multipart/form-data">
+
+    </header>
+    <h1 class="bodyh1">Edit Post</h1>
+    <div class="ipform">
+        <form action="{{route('Post.update',$post->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div>
             <label for="title">Title:</label><br>
@@ -34,8 +40,11 @@
             @error('image')
                 <p class="alert alert-danger">{{ $message }}</p>
             @enderror
-            <button type="submit">Create Post</button>
+            <div class="submitbtn">
+                <button type="submit">Update Post</button>
+            </div>
         </div>
     </form>
+    </div>
 </body>
 </html>

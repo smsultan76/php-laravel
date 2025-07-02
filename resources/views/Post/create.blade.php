@@ -8,15 +8,20 @@
     <title>Create Post</title>
 </head>
 <body>
+    <header>
     <nav class="navbar">
+        <h1>{{config('app.name')}}</h1>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/Post/create">Create</a></li>
             <li><a href="{{Route('home')}}">Index</a></li>
+            <!-- <li><a href="/">Home</a></li> -->
+            <li><a href="/Post/create">Create</a></li>
         </ul>
     </nav>
-    <h1>Create New Post</h1>
-    <form action="{{route('Post.store')}}" method="POST" enctype="multipart/form-data">
+
+    </header>
+    <h1 class="bodyh1">Create New Post</h1>
+    <div class="ipform">
+        <form action="{{route('Post.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div>
             <label for="title">Title:</label><br>
@@ -31,13 +36,16 @@
                 <p class="alert alert-danger">{{ $message }}</p>
             @enderror
 
-            <label for="Image"> Select Image:</label><br>
+            <label for="Image"> Select Image:</label>
             <input type="file" name="image" accept="image/*" value="{{old('image')}}"><br>
             @error('image')
                 <p class="alert alert-danger">{{ $message }}</p>
             @enderror
-            <button type="submit">Create Post</button>
+            <div class="submitbtn">
+                <button type="submit">Create Post</button>
+            </div>
         </div>
     </form>
+    </div>
 </body>
 </html>

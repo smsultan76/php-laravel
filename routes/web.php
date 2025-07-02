@@ -17,8 +17,10 @@ use App\Models\Post;
 //         ['massage' => 'Test SM 2']);
 // });
 
+Route::get('index/search',[PostController::class, 'search'])->name('index.search');
+
 Route::get('/index', function(){
-    return view('index',['posts'=>Post::paginate(5)]);
+    return view('index',['posts'=>Post::simplePaginate(6)]);
 })->name('home');
 Route::get('/', [PageController::class, 'index']);
 Route::get('/test', [PageController::class, 'test']);
