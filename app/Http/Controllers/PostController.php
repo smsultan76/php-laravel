@@ -15,6 +15,19 @@ class PostController extends Controller
 
   
 
+    public function search(Request $request){
+        // Validate the search input
+        $request->validate([
+            'search' => 'required|string|max:255',
+        ]);
+
+        $search = $request->input('search');
+        $searchresult = Post::where('title', 'like', '%' . $search . '%')->paginate(6) or
+                  Post::where('content', 'like', '%' . $search . '%')->paginate(6);
+        return view('index', ['posts' => $searchresult]); 
+
+    }
+
    public function PCstore(Request $request)
 {
     $validate = $request->validate([
@@ -72,7 +85,7 @@ class PostController extends Controller
     public function deleteData($Id){
         $post = Post::findOrFail($Id);
         $post->delete();
-        return redirect()->route('home')->with('success', 'Post deleted successfully!');
+        return redirect()->route('home')->with('danger', 'Post deleted successfully!');
     }
     
 }

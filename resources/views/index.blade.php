@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,30 +10,45 @@
 
     <title>My imlementation</title>
 </head>
+
 <body>
     <header>
-    <nav class="navbar">
-        <h1>{{config('app.name')}}</h1>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/Post/create">Create</a></li>
-            <li><a href="{{Route('home')}}">index</a></li>
-        </ul>
-    </nav>
+        <nav class="navbar">
+            <h1>{{config('app.name')}}</h1>
+            <ul>
+                <li><a href="{{Route('home')}}">Index</a></li>
+                <!-- <li><a href="/">Home</a></li> -->
+                <li><a href="/Post/create">Create</a></li>
+            </ul>
+        </nav>
 
     </header>
     <div class="container">
-        <h1 class="mamun">Welcome to My Implementation</h1>
-        <p>This is a simple Laravel application demonstrating basic routing and views.</p>
-        
+        <h2 class="mamun">Welcome to My Implementation</h2>
+
         @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @elseif(session('danger'))
+        <div class="alert alert-danger">
+            {{ session('danger') }}
+
+        </div>
         @endif
+
     </div>
     <div>
         <table>
+            <caption class="table-caption">
+                <div class="caption-content">
+                    <h3>Data Table</h3>
+                    <form action="{{route('index.search')}}" method="get">
+                        <input type="text" name="search" placeholder="Search by title" value="{{ request('search') }}">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </caption>
             <thead class="thead">
                 <tr>
                     <th>ID</th>
@@ -46,39 +62,40 @@
             </thead>
             <tbody class="tbody">
                 @foreach($posts as $post)
-                    <tr>
-                        <td>{{ $post->id }}</td>
-                        <td>{{ $post->title }}</td>
-                        <td>{{ $post->content }}</td>
-                        <td>
-                            @if($post->image)
-                                <img src="{{ asset('images/' . $post->image) }}" alt="Post Image" style="width: 100px; height: auto;">
-                            @else
-                                No Image
-                            @endif
-                        </td>
-                        <td>{{ $post->created_at }}</td>
-                        <td>{{ $post->updated_at }}</td>
-                        <td>
-                            <a href="{{ route('Post.edit', $post->id) }}" class="btn btn-primary">Edit</a>
-                            <form action="{{route('Post.delete', $post->id)}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </td>
-                            
-                    </tr>
+                <tr>
+                    <td>{{ $post->id }}</td>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ $post->content }}</td>
+                    <td>
+                        @if($post->image)
+                        <img src="{{ asset('images/' . $post->image) }}" alt="Post Image" style="width: 100px; height: auto;">
+                        @else
+                        No Image
+                        @endif
+                    </td>
+                    <td>{{ $post->created_at }}</td>
+                    <td>{{ $post->updated_at }}</td>
+                    <td class="action-buttons">
+                        <a href="{{ route('Post.edit', $post->id) }}" class="btn btn-primary">Edit</a>
+                        <form action="{{route('Post.delete', $post->id)}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+
+                </tr>
                 @endforeach
                 <tr>
                     <td colspan="7">
-                        {{ $posts->links() }} <!-- Pagination links -->
+                        {{ $posts->links('',['foo'=>'bar']) }} <!-- Pagination links -->
                     </td>
             </tbody>
         </table>
     </div>
 
-         
-<script src="js/index.js" ></script>
+
+    <script src="js/index.js"></script>
 </body>
+
 </html>
